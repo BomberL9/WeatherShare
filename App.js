@@ -1,20 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import Login from './screens/Login';
+import BottomTabNavigator from './components/BottomTabNavigator';
+
+import * as Font from "expo-font";
+import { Montserrat_500Medium } from "@expo-google-fonts/montserrat";
+
+const Stack = createStackNavigator();
+
+export default class App extends Component{
+  constructor(){
+    super();
+    this.state = {
+      fontLoaded: false
+    };
+  }
+
+  async loadFonts(){
+    await Font.loadAsync({
+      Montserrat_500Medium: Montserrat_500Medium
+    });
+    this.setState({fontLoaded: true});
+  }
+
+  componentDidMount(){
+    this.loadFonts();
+  }
+
+  render(){
+    const {fontLoaded} = this.state;
+    
+    if(fontLoaded){
+      return(
+        <NavigationContainer>
+          <Stack.Navigator headerMode="none">
+            <Stack.Screen name="Login" component={Login}/>
+            <Stack.Screen name="System" component={BottomTabNavigator}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    }
+    return null;
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
