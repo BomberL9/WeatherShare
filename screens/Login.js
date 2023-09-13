@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, Image, ImageBackground, Alert, TouchableOpacity } from "react-native";
-import { auth, db } from '../config';
+import firebase from "firebase";
+import { firestore, auth } from '../config';
+
 
 const loginBackground = require("../assets/loginBackground.png");
 const loginLogo = require("../assets/loginLogo.png");
@@ -17,7 +19,8 @@ export default class Login extends Component{
     }
 
     handleLogin = (email, password) => {
-        auth()
+        firebase
+        .auth()
         .signInWithEmailAndPassword(email, password)
         .then(()=>{
             this.props.navigation.navigate("System");
@@ -57,9 +60,14 @@ export default class Login extends Component{
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity style={styles.signInButton}
+                        <TouchableOpacity style={{backgroundColor: '#93CAED', ...styles.signInButton}}
                         onPress={()=>this.handleLogin(email, password)}>
                             <Text style={styles.signInText}>Entrar</Text>
+                        </TouchableOpacity>
+                        {/* botão provisório de logar sem conta */}
+                        <TouchableOpacity style={{backgroundColor: '#D3D3D3', ...styles.signInButton}}
+                        onPress={()=>this.props.navigation.navigate("System")}>
+                            <Text style={styles.signInText}>Entrar sem conta</Text>
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
@@ -116,7 +124,6 @@ const styles = StyleSheet.create({
     },
     signInButton:{
         borderRadius: 20,
-        backgroundColor: '#93CAED',
         marginTop: 30,
         padding: 30,
         alignSelf: 'center',

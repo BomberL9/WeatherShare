@@ -35,7 +35,7 @@ export default class App extends Component{
     if(fontLoaded){
       return(
         <NavigationContainer>
-          <Stack.Navigator headerMode="none">
+          <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="System" component={BottomTabNavigator}/>
           </Stack.Navigator>
