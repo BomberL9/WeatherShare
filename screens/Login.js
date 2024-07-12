@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, Image, ImageBa
 import firebase from "firebase";
 import { firestore, auth } from '../config';
 
-
 const loginBackground = require("../assets/loginBackground.png");
 const loginLogo = require("../assets/loginLogo.png");
 
